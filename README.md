@@ -28,9 +28,9 @@ Commands to run in terminal:
 
 ```
 docker pull vporubsky/combine_2020_reproducibility_tutorial
-docker run -p 49160:80 -d vporubsky/combine_2020_reproducibility_tutorial
+docker run -p 49160:80 vporubsky/combine_2020_reproducibility_tutorial
 ```
 
-Go to port: 0.0.0.0:49160
+Go to browswer port: 0.0.0.0:49160
 
 
