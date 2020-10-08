@@ -27,8 +27,8 @@ Start up Docker Desktop
 Commands to run in terminal: 
 
 ```
-docker pull vporubsky/COMBINE_2020_reproducibility_tutorial
-docker run -p 49160:80 -d vporubsky/COMBINE_2020_reproducibility_tutorial
+docker pull vporubsky/combine_2020_reproducibility_tutorial
+docker run -p 49160:80 -d vporubsky/combine_2020_reproducibility_tutorial
 ```
 
 Go to port: 0.0.0.0:49160
