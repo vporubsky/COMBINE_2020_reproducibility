@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sbml xmlns="http://www.sbml.org/sbml/level3/version1/core" level="3" version="1">
+  <model metaid="sars_cov2_infection" id="sars_cov2_infection">
+    <listOfCompartments>
+      <compartment sboTerm="SBO:0000410" id="default_compartment" spatialDimensions="3" size="1" constant="true"/>
+    </listOfCompartments>
+    <listOfSpecies>
+      <species id="gen_ssRNA" compartment="default_compartment" initialAmount="0" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
+      <species id="rep_ssRNA" compartment="default_compartment" initialAmount="1" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
+      <species id="envelope" compartment="default_compartment" initialAmount="0" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
+      <species id="virus_free" compartment="default_compartment" initialAmount="0" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
+      <species id="ACE2" compartment="default_compartment" initialConcentration="100" hasOnlySubstanceUnits="false" boundaryCondition="true" constant="false"/>
+      <species id="virus_bound" compartment="default_compartment" initialAmount="0" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
+    </listOfSpecies>
+    <listOfParameters>
+      <parameter id="k1" value="0.968" constant="true"/>
+      <parameter id="k2" value="0.025" constant="true"/>
+      <parameter id="k3" value="1000" constant="true"/>
+      <parameter id="k4" value="0.222" constant="true"/>
+      <parameter id="k5" value="2" constant="true"/>
+      <parameter id="k6" value="7.5e-06" constant="true"/>
+      <parameter id="k7" value="0.112" constant="true"/>
+    </listOfParameters>
+    <listOfReactions>
+      <reaction id="production_genomic_ssRNA" reversible="true" fast="false">
+        <listOfProducts>
+          <speciesReference species="gen_ssRNA" stoichiometry="1" constant="true"/>
+        </listOfProducts>
+        <listOfModifiers>
+          <modifierSpeciesReference species="rep_ssRNA"/>
+        </listOfModifiers>
+        <kineticLaw>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <times/>
+              <ci> k1 </ci>
+              <ci> rep_ssRNA </ci>
+            </apply>
+          </math>
+        </kineticLaw>
+      </reaction>
+      <reaction sboTerm="SBO:0000183" id="transcription_genomic_ssRNA" reversible="true" fast="false">
+        <listOfReactants>
+          <speciesReference species="gen_ssRNA" stoichiometry="1" constant="true"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="rep_ssRNA" stoichiometry="1" constant="true"/>
+        </listOfProducts>
+        <kineticLaw>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <times/>
+              <ci> k2 </ci>
+              <ci> gen_ssRNA </ci>
+            </apply>
+          </math>
+        </kineticLaw>
+      </reaction>
+      <reaction sboTerm="SBO:0000184" id="translation_of_viral_envelope" reversible="true" fast="false">
+        <listOfProducts>
+          <speciesReference species="envelope" stoichiometry="1" constant="true"/>
+        </listOfProducts>
+        <listOfModifiers>
+          <modifierSpeciesReference species="rep_ssRNA"/>
+        </listOfModifiers>
+        <kineticLaw>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <times/>
+              <ci> k3 </ci>
+              <ci> rep_ssRNA </ci>
+            </apply>
+          </math>
+        </kineticLaw>
+      </reaction>
+      <reaction id="degradation_of_ssRNA" reversible="true" fast="false">
+        <listOfReactants>
+          <speciesReference species="rep_ssRNA" stoichiometry="1" constant="true"/>
+        </listOfReactants>
+        <kineticLaw>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <times/>
+              <ci> k4 </ci>
+              <ci> rep_ssRNA </ci>
+            </apply>
+          </math>
+        </kineticLaw>
+      </reaction>
+      <reaction id="degradation_of_envelope" reversible="true" fast="false">
+        <listOfReactants>
+          <speciesReference species="envelope" stoichiometry="1" constant="true"/>
+        </listOfReactants>
+        <kineticLaw>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <times/>
+              <ci> k5 </ci>
+              <ci> envelope </ci>
+            </apply>
+          </math>
+        </kineticLaw>
+      </reaction>
+      <reaction id="formation_of_free_virus_complex" reversible="true" fast="false">
+        <listOfReactants>
+          <speciesReference species="gen_ssRNA" stoichiometry="1" constant="true"/>
+          <speciesReference species="envelope" stoichiometry="1" constant="true"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="virus_free" stoichiometry="1" constant="true"/>
+        </listOfProducts>
+        <kineticLaw>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <times/>
+              <ci> k6 </ci>
+              <ci> gen_ssRNA </ci>
+              <ci> envelope </ci>
+            </apply>
+          </math>
+        </kineticLaw>
+      </reaction>
+      <reaction id="binding_of_virus_complex_to_host" reversible="true" fast="false">
+        <listOfReactants>
+          <speciesReference species="virus_free" stoichiometry="1" constant="true"/>
+          <speciesReference species="ACE2" stoichiometry="1" constant="true"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="virus_bound" stoichiometry="1" constant="true"/>
+        </listOfProducts>
+        <kineticLaw>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <times/>
+              <ci> k7 </ci>
+              <ci> virus_free </ci>
+              <ci> ACE2 </ci>
+            </apply>
+          </math>
+        </kineticLaw>
+      </reaction>
+    </listOfReactions>
+  </model>
+</sbml>

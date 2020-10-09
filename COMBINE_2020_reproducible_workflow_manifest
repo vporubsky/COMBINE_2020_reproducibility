@@ -1,0 +1,49 @@
+Manifest-Version: 1.1
+Created-By: Veronica Porubsky
+Package-Name: COMBINE_2020_reproducible_workflow
+
+.py files:
+- configure_flask_organization.py
+- data_aggregation.py
+- display_sars_cov2_infection_study_results.py
+- execute_sars_cov2_infection_study.py
+- gen_COMBINE_archive.py
+- gen_experimental_data.py
+- gen_html_display.py
+- gen_SBML.py
+- gen_SEDML.py
+- model_fitting.py
+- model_v001.py
+- model_v002.py
+- model_v003.py
+- model_v100.py
+- parameter_estimation.py
+- run_COMBINE_archive.py
+- run_SEDML.py
+- simulation.py
+- test_validation.py
+- view_data.py
+
+.csv files:
+- data.csv
+- fitted_parameter_sets.csv
+
+.jpg files:
+- curated_k7_sars_cov2_infection_simulation.jpg
+- parameter_fitting_sars_cov2_infection_simulation.jpg
+
+.xml files:
+- sars_cov2_infection.xml
+- sars_cov2_infection_simulation.xml
+
+.omex files:
+- sars_cov2_infection.omex
+
+.html files:
+- sars_cov2_modeling_study_results.html
+
+additional files:
+- Dockerfile
+- .dockerignore
+- COMBINE_2020_reproducible_workflow_manifest
+

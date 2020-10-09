@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created by phraSED-ML version v1.0.9 with libSBML version 5.18.1. -->
+<sedML xmlns="http://sed-ml.org/sed-ml/level1/version3" level="1" version="3">
+  <listOfSimulations>
+    <uniformTimeCourse id="det_sim" initialTime="0" outputStartTime="0" outputEndTime="200" numberOfPoints="100">
+      <algorithm kisaoID="KISAO:0000019"/>
+    </uniformTimeCourse>
+    <uniformTimeCourse id="stoch_sim" initialTime="0" outputStartTime="0" outputEndTime="200" numberOfPoints="100">
+      <algorithm kisaoID="KISAO:0000241">
+        <listOfAlgorithmParameters>
+          <algorithmParameter kisaoID="KISAO:0000488" value="124"/>
+        </listOfAlgorithmParameters>
+      </algorithm>
+    </uniformTimeCourse>
+  </listOfSimulations>
+  <listOfModels>
+    <model id="sars_cov2_inf" language="urn:sedml:language:sbml.level-3.version-1" source="sars_cov2_infection.xml"/>
+  </listOfModels>
+  <listOfTasks>
+    <task id="run_det_sim" modelReference="sars_cov2_inf" simulationReference="det_sim"/>
+    <task id="run_stoch_sim" modelReference="sars_cov2_inf" simulationReference="stoch_sim"/>
+    <repeatedTask id="run_mult_stoch_sim" range="x" resetModel="true">
+      <listOfRanges>
+        <uniformRange id="x" start="0" end="10" numberOfPoints="10" type="linear"/>
+      </listOfRanges>
+      <listOfSubTasks>
+        <subTask order="0" task="run_stoch_sim"/>
+      </listOfSubTasks>
+    </repeatedTask>
+  </listOfTasks>
+  <listOfDataGenerators>
+    <dataGenerator id="plot_0_0_0" name="run_det_sim.time">
+      <listOfVariables>
+        <variable id="run_det_sim_____time" symbol="urn:sedml:symbol:time" taskReference="run_det_sim"/>
+      </listOfVariables>
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> run_det_sim_____time </ci>
+      </math>
+    </dataGenerator>
+    <dataGenerator id="plot_0_0_1" name="run_det_sim.gen_ssRNA">
+      <listOfVariables>
+        <variable id="run_det_sim_____gen_ssRNA" target="/sbml:sbml/sbml:model/sbml:listOfSpecies/sbml:species[@id='gen_ssRNA']" taskReference="run_det_sim" modelReference="sars_cov2_inf"/>
+      </listOfVariables>
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> run_det_sim_____gen_ssRNA </ci>
+      </math>
+    </dataGenerator>
+    <dataGenerator id="plot_1_0_0" name="run_mult_stoch_sim.time">
+      <listOfVariables>
+        <variable id="run_mult_stoch_sim_____time" symbol="urn:sedml:symbol:time" taskReference="run_mult_stoch_sim"/>
+      </listOfVariables>
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> run_mult_stoch_sim_____time </ci>
+      </math>
+    </dataGenerator>
+    <dataGenerator id="plot_1_0_1" name="run_mult_stoch_sim.gen_ssRNA">
+      <listOfVariables>
+        <variable id="run_mult_stoch_sim_____gen_ssRNA" target="/sbml:sbml/sbml:model/sbml:listOfSpecies/sbml:species[@id='gen_ssRNA']" taskReference="run_mult_stoch_sim" modelReference="sars_cov2_inf"/>
+      </listOfVariables>
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> run_mult_stoch_sim_____gen_ssRNA </ci>
+      </math>
+    </dataGenerator>
+  </listOfDataGenerators>
+  <listOfOutputs>
+    <plot2D id="plot_0" name="sars-cov2 infection deterministic simulation">
+      <listOfCurves>
+        <curve id="plot_0__plot_0_0_0__plot_0_0_1" logX="false" logY="false" xDataReference="plot_0_0_0" yDataReference="plot_0_0_1"/>
+      </listOfCurves>
+    </plot2D>
+    <plot2D id="plot_1" name="sars-cov2 infection stochastic simulation">
+      <listOfCurves>
+        <curve id="plot_1__plot_1_0_0__plot_1_0_1" logX="false" logY="false" xDataReference="plot_1_0_0" yDataReference="plot_1_0_1"/>
+      </listOfCurves>
+    </plot2D>
+  </listOfOutputs>
+</sedML>
