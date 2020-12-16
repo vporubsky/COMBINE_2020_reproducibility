@@ -6,8 +6,6 @@ A tutorial demonstrating a tool-agnostic approach to reproducible biochemical mo
 
 To access the materials for this tutorial, go to: https://github.com/vporubsky/COMBINE_2020_reproduciblity
 
-A simplified version of the tutorial is available as a Jupyter notebook, hosted on Google Colaboratory: 
-
 ## Dependencies:
 
 - Python 3.8.2
